@@ -1,0 +1,20 @@
+SELECT * FROM Customers;
+SELECT CustomerName FROM Customers;
+SELECT * FROM Customers WHERE CustomerID > 18;
+SELECT * FROM Customers ORDER BY CustomerID DESC;
+UPDATE Customers SET Address='Obere str. 59' WHERE CustomerID=1;
+DELETE FROM Customers WHERE CustomerID=3;
+
+SELECT MAX (Price) FROM Products;
+SELECT MIN (Price) FROM Products;
+SELECT AVG (Price) FROM Products;
+SELECT MAX (Price), MIN (Price) FROM Products;
+SELECT AVG (Price) FROM Products GROUP BY CategoryID;
+
+--EXTRA
+SELECT MAX (Price), MIN (Price) FROM Products WHERE CategoryID=1;
+SELECT MAX (Price), MIN (Price) FROM Products WHERE NOT CategoryID=1;
+SELECT MAX (Price), MIN (Price) FROM Products WHERE ProductName LIKE "S%" GROUP BY CategoryID;
+SELECT AVG (Price) FROM Products WHERE ProductName LIKE "%S" GROUP BY CategoryID;
+
+

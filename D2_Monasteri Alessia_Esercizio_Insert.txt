@@ -1,0 +1,18 @@
+-- CREATE DATABASE esercizi_1;
+USE esercizi_1;
+DROP TABLE IF EXISTS Automobile;
+CREATE TABLE Automobile ( marca VARCHAR(50), modello VARCHAR(35), targa VARCHAR(7), cilindrata INT, colore VARCHAR(50) );
+INSERT INTO Automobile (marca, modello, targa, cilindrata, colore) 
+VALUES ("Ferrari", "488", "AA123BB", 3902, "Rosso"),
+("Mercedes", "ClasseC", "CC456DD", 2998, "Grigio"),
+("BMW", "i8", "EE789FF", 1498, "Bluscuro"),
+("Fiat", null, null, 1233, null);
+SELECT * FROM Automobile;
+DROP TABLE IF EXISTS Lavoratore; 
+CREATE TABLE Lavoratore (nome VARCHAR(25), cognome VARCHAR(40), matricola VARCHAR(16), stipendio INT);
+INSERT INTO Lavoratore (nome, cognome, matricola, stipendio)
+VALUES ("Paolo", "Verde", "A01234", 1865),
+("Stefano", "Neri", "B05678", 2000),
+("Francesco", "Azzurra", "C09012", 2500),
+("Luca", "Rosso", "B091234", 2100);
+SELECT * FROM Lavoratore;
