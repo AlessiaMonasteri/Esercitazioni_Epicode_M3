@@ -1,0 +1,60 @@
+-- CREATE DATABASE Dipartimenti;
+USE Dipartimenti;
+DROP TABLE IF EXISTS Dipendente;
+CREATE TABLE Dipendente (ID INT, 
+                         CONSTRAINT PK_ID PRIMARY KEY (ID),
+                         Nome TEXT(45), 
+                         Cognome TEXT(45), 
+                         Email VARCHAR(50), 
+                         NumeroTelefono VARCHAR(10), 
+                         Data_Assunzione DATE, 
+                         ID_LAVORO INT, 
+                         SALARIO DOUBLE, 
+                         ID_MANAGER INT, 
+                         ID_DIPARTIMENTO INT);
+INSERT INTO Dipendente VALUES (1, 'Olga', 'Rinaldo', 'olga.rinaldo@gmail.com', 3458585444, '2015-04-15', 3, 1800, 1, 1),    
+                              (2, 'Anna', 'Francone', 'anna.francone@gmail.com', 3338689595, '2020-05-26', 3, 1600, 1, 1),
+                              (3, 'Simone', 'Serra', 'simone.serra@gmail.com', 3925577575, '2012-11-8', 2, 2000, 1, 1),
+                              (4, 'Daniele', 'Verdi', 'daniele.verdi@gmail.com', 3473094527, '2017-02-20', 2, 1700, 1, 1),
+                              (5, 'Sandro', 'Sella', 'sandro.sella@gmail.com', 3328778878, '2010-01-10', 1, 2200, 1, 3),
+                              (6, 'Enrico', 'Crina', 'enrico.crina@gmail.com', 3669597712, '2011-06-25', 1, 2100, 1, 2),
+                              (7, 'Davide', 'Motta', 'davide.motta@gmail.com', 3356633454, '2018-10-3', 2, 1750, 1, 2),
+                              (8, 'Larissa', 'Maestro', 'larissa.maestro@gmail.com', 3457887001, '2005-12-10', 1, 2500, 1, 3),
+                              (9, 'Alessia', 'Toma', 'alessia.toma@gmail.com', 3664466090, '2015-03-10', 2, 1800, 1, 2),
+                              (10, 'Federica', 'Milano', 'federica.milano@gmail.com', 3456667000, '2015-9-9', 3, 1800, 1, 3),
+                              (11, 'Carolina', 'Cardellino', 'carolina.cardellino@gmail.com', 3498765919, '2015-7-1', 3, 1800, 1, 2),
+                              (12, 'Matteo', 'Bortone', 'matteo.bortone@gmail.com', 3330230333, '2015-04-14', 2, 1800, 1, 3),
+                              (13, 'Stefano', 'Linus', 'stefano.linus@gmail.com', 3489897665, '2015-6-3', 1, 1800, 1, 2),
+                              (14, 'Rebecca', 'Gensa', 'rebecca.gensa@gmail.com', 3456564313, '2015-6-9', 3, 1800, 1, 1),
+                              (15, 'Alessandro', 'Ceci', 'alessandro.ceci@gmail.com', 3938786454, '2015-11-5', 1, 1800, 1, 2),
+                              (16, 'Pietro', 'Gione', 'pietro.gione@gmail.com', 3467675898, '2015-3-3', 3, 1800, 1, 3),
+                              (17, 'Jacopo', 'Ghini', 'jacopo.ghini@gmail.com', 3336692848, '2015-6-29', 2, 1800, 1, 1),
+                              (18, 'Luana', 'Savarese', 'luana.savarese@gmail.com', 3333039893, '2015-7-10', 1, 1800, 1, 1),
+                              (19, 'Viviana', 'Vienna', 'viviana.vienna@gmail.com', 3458585955, '2015-1-8', 3, 1800, 1, 3),
+                              (20, 'Giacomo', 'Pastorini', 'giacomo.pastorini@gmail.com', 3472721922, '2015-9-9', 1, 1800, 1, 2);
+DROP TABLE IF EXISTS Dipartimento;
+CREATE TABLE Dipartimento (ID_DIPARTIMENTO INT, 
+                          CONSTRAINT PK_ID_DIPARTIMENTO PRIMARY KEY (ID_DIPARTIMENTO),
+                          NOME_DIP VARCHAR(30), 
+                          ID_MANAGER INT, 
+                          ID_LOCATION INT);
+INSERT INTO Dipartimento VALUES (1, 'Geologia', 1, 1), 
+                                (2, 'Chimica', 1, 1),
+                                (3, 'Biologia', 1, 1);
+
+SELECT CONCAT(MONTHNAME(Data_Assunzione),' ', DAYOFMONTH(Data_Assunzione),' ', YEAR(Data_Assunzione))
+FROM Dipendente;
+
+SELECT Nome, Cognome
+FROM Dipendente
+WHERE MONTHNAME(Data_assunzione) LIKE 'June';
+
+SELECT YEAR(Data_Assunzione)
+FROM Dipendente
+GROUP BY YEAR(Data_Assunzione)
+HAVING COUNT(*)>10;
+
+SELECT Dipartimento.NOME_DIP, Dipendente.SALARIO, Dipartimento.ID_MANAGER
+FROM Dipartimento
+INNER JOIN Dipendente ON Dipartimento.ID_DIPARTIMENTO = Dipendente.ID_DIPARTIMENTO
+WHERE Data_Assunzione < '2017-04-21';
