@@ -1,0 +1,21 @@
+SELECT Citta, NumPiste
+FROM AEROPORTO
+WHERE NumPiste IS NULL;
+
+SELECT DISTINCT TipoAereo 
+FROM AEREO
+WHERE VOLO.CittaPart = "Torino";
+
+SELECT CittaPart 
+FROM VOLO
+WHERE CittaArr = "Bologna";
+
+SELECT CittaPart, CittaArr 
+FROM VOLO
+WHERE IdVolo = "AZ274";
+
+SELECT TipoAereo, GiornoSett, OraPart 
+FROM VOLO
+WHERE CittaPart LIKE "b%o" 
+AND CittaArr LIKE "%e%a";
+

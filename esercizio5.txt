@@ -1,0 +1,109 @@
+1.
+
+SELECT 
+	S.Matricola, 
+	S.Nome, 
+	MAX(E.Voto) AS Voto_Massimo, 
+	MIN (E.Voto) AS Voto_Minimo, 
+	AVG(E.Voto) AS Voto_Medio
+FROM 
+	STUDENTE AS S
+LEFT JOIN 
+	ESAME AS E
+ON 
+	S.Matricola=E.MatricolaStudente
+GROUP BY 
+	S.Matricola;
+
+2.
+
+SELECT 
+	S.Matricola, 
+	S.Nome, 
+	MAX(E.Voto), 
+	MIN(E.Voto), 
+	AVG(E.Voto)
+FROM 
+	STUDENTE AS S
+JOIN 
+	ESAME AS E
+ON 
+	S.Matricola=E.MatricolaStudente
+GROUP BY
+	 S.Matricola
+HAVING 
+	AVG(Voto)>25
+AND COUNT(E.Data)>=10
+ORDER BY
+	 E.Voto DESC;
+
+1.
+
+SELECT 
+	S.NomeStudente, 
+	D.SettoreScientifico
+FROM 
+	STUDENTE AS S
+JOIN 
+	PARTECIPACONCORSOMASTER AS P
+ON 
+	P.MatricolaStudente = S.Matricola
+JOIN 
+	DIPARTIMENTO AS D
+ON 
+	D.CodiceDipartimento = P.CodiceDipartimento
+GROUP BY 
+	S.NomeStudente
+HAVING COUNT(P.CodiceMaster) = 3
+ORDER BY 
+	S.NomeStudente;
+
+2.
+
+SELECT 
+	D.NomeDipartimento, 
+	C.CodiceMaster, 
+	D.SettoreScientifico
+	COUNT(C.CodiceMaster) AS NumeroConcorsi
+FROM 
+	DIPARTIMENTO AS D
+JOIN 
+	CONCORSOMASTER AS C
+ON 
+	C.CodiceDipartimento = D.CodiceDipartimento
+WHERE 
+	C.NumPostiDisponibili > 7
+GROUP BY 
+	D.NomeDipartimento
+HAVING COUNT(DISTINCT C.CodiceMaster) = COUNT(*)
+ORDER BY 
+	D.NomeDipartimento ASC, D.SettoreScientifico ASC;
+
+3.
+
+SELECT DISTINCT 
+	S.Matricola,
+	S.NomeStudente
+FROM 
+	STUDENTE AS S
+JOIN 
+	PARTECIPACONCORSOMASTER AS P
+ON 
+	P.MatricolaStudente = S.Matricola
+JOIN 
+	CONCORSOMASTER AS C1
+ON 
+	C1.CodiceMaster = P.CodiceMaster
+JOIN 
+	CONCORSOMASTER AS C2
+ON 
+	C2.CodiceMaster = P.CodiceMaster
+WHERE 
+	S.VotoLaurea > 100
+AND 
+	C1.datapubblicazione = C2.datapubblicazione
+GROUP BY 
+	S.Matricola
+HAVING COUNT(DISTINCT CodiceMaster) >= 2
+
+

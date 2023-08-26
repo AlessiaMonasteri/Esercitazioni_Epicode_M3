@@ -1,0 +1,44 @@
+L'esercizio è mirato a prendere confidenza con le interrogazioni avanzate SQL che fanno uso di date. Dato il seguente schema scrivere le interrogazioni di seguito:
+
+Dipendente(id, nome, cognome, email, numerotelefono, data_assunzione, id_lavoro, salario, id_manager, id_dipartimento)
+Dipartimento(id_dipartimento, nome_dip, id_manager, id_location)
+
+Nota: data assunzione è nella forma YYYY-MM-DD
+
+1)Visualizzare la data di assunzione dei manager e i loro id appartenenti al dipartimento ’Amministrazione’ nel formato Nome mese, giorno, anno
+
+2)Visualizzare il nome e il cognome dei dipendenti assunti nel mese di Giugno
+
+3)Visualizzare gli anni in cui più di 10 dipendenti sono stati assunti
+
+4)Visualizzare il nome del dipartimento, il nome del manager, il salario del manager di tutti i manager la cui esperienza è maggiore di 5 anni
+
+1)
+SELECT DATE_FORMAT(dipe.data_assunzione,'%M/%d/%Y'), dipa.id_manager
+FROM Dipendente AS dipe
+JOIN Dipartimento AS dipa
+ON dipe.id_dipartimento = dipa.id_dipartimento
+WHERE nome_dip = 'Amministrazione';
+
+2)
+SELECT dipe.nome, dipe.cognome
+FROM Dipendente AS dipe
+WHERE MONTHNAME(data_assunzione) = Giugno ;
+
+3)
+SELECT DISTINCT YEAR(dipe.data_assunzione)
+FROM Dipendente AS dipe
+GROUP BY YEAR(dipe.data_assunzione)
+HAVING COUNT(*) > 10 ;
+
+4)
+SELECT dipa.nome_dip, dipa.id_manager, dipe.nome, dipe.salario
+FROM Dipartimento AS dipa
+LEFT JOIN Dipendente AS dipe
+ON dipe.id_manager = dipa.id_manager
+WHERE DATEDIFF(dipe.data_assunzione, curdate()) > 5*365 ;
+
+
+
+
+

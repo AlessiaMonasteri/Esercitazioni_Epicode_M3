@@ -1,0 +1,23 @@
+Dato il seguente schema, scrivere la query riportata.
+
+CORSO (CodCorso, NomeC, Anno, Semestre)
+ORARIO-LEZIONI (CodCorso, GiornoSettimana, OraInizio, OraFine, Aula)
+
+Trovare le aule in cui non si tengono mai lezioni di corsi del primo anno.
+
+SELECT DISTINCT ORARIO-LEZIONI.Aula
+FROM ORARIO-LEZIONI
+JOIN CORSO
+ON ORARIO-LEZIONI.CodCorso=CORSO.CodCorso
+WHERE C.Anno <> 1;
+
+SELECT DISTINCT Aula
+FROM ORARIO_LEZIONI AS O
+WHERE Aula NOT IN (
+SELECT DISTINCT O.Aula
+FROM O
+JOIN CORSO AS C
+ON O.CodCorso=C.CodCorso
+WHERE C.Anno=1);
+
+

@@ -1,0 +1,63 @@
+1)     DISCO(NroSerie, TitoloAlbum,Anno,Prezzo)
+       CONTIENE(NroSerieDisco,CodiceReg,NroProg)
+       ESECUZIONE(CodiceReg,TitoloCanz,Anno)
+       AUTORE(Nome,TitoloCanzone)
+       CANTANTE(NomeCantante,CodiceReg)
+
+DISCO - NroSerie PK,  ESECUZIONE - CodiceReg PK, AUTORE - Nome PK, CANTANTE - NomeCantante, CONTIENE - NroSerieDisco,CodiceReg,NroProg PK
+
+-I cantautori (persone che hanno cantato e scritto la stessa canzone) il cui nome     inizia per 'D’;
+
+SELECT A.Nome
+FROM AUTORE AS A
+JOIN ESECUZIONE AS E
+ON E.TitoloCanz = A.TitoloCanzone
+JOIN CANTANTE AS C
+ON E.CodiceReg = C.CodiceReg
+WHERE Nome LIKE "D%";
+
+-I titoli dei dischi che contengono canzoni di cui non si conosce l'anno di  registrazione;
+
+SELECT DISCO.TitoloAlbum
+FROM DISCO AS D
+JOIN CONTIENE AS C
+ON D.NroSerie=C.NroSerieDisco
+JOIN ESECUZIONE AS E
+ON E.CodiceReg=C.CodiceReg
+WHERE E.Anno = null;
+
+-I cantanti che hanno sempre registrato canzoni come solisti
+
+SELECT C1.NomeCantante 
+FROM CANTANTE AS C1 
+JOIN ESECUZUIONE AS E 
+ON E.CodiceReg = C1.CodiceReg 
+JOIN CANTANTE AS C2 
+ON E.CodiceReg = C2.CodiceReg 
+WHERE C1.NomeCantante <> C2.NomeCantante
+
+2)    STUDENTE(Matricola, Nome, Citta)
+      CORSO(Codice, Nome, MatricolaDocente)
+      DOCENTE(Matricola, Nome)
+      ESAME(Codice, MatricolaStudente, Data, Voto, SettoreScientifico) 
+
+STUDENTE - Matricola PK, CORSO - Codice, DOCENTE - Matricola PK, ESAME - Codice PK
+
+-Per ogni studente, visualizzare gli esami sostenuti con voto maggiore di 28 assieme alla matricola dello studente e al nome del docente che ha tenuto il corso.
+
+SELECT ESAME.Codice, ESAME.Voto, ESAME.MatricolaStudente, DOCENTE.Nome
+FROM ESAME
+JOIN CORSO
+ON ESAME.Codice=CORSO.Codice 
+JOIN DOCENTE
+ON DOCENTE.Matricola=CORSO.MatricolaDocente
+WHERE ESAME.Voto > 28
+
+-Per ogni docente, visualizzare il nome, il nome del corso di cui è titolare e il settore scientifico del corso.
+
+SELECT DOCENTE.Nome, CORSO.Nome, ESAME.SettoreScientifico
+FROM DOCENTE
+JOIN CORSO
+ON DOCENTE.Matricola=CORSO.MatricolaDocente
+JOIN ESAME
+ON CORSO.Codice=ESAME.Codice
